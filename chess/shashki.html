@@ -1,0 +1,251 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Шашки</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#111111"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Шашки"><link rel="apple-touch-icon" href="icon-180.png"><link rel="icon" type="image/png" href="icon-192.png"><style>
+:root{--bg:#fff;--fg:#000;--m:#555;--c:min(calc((100vw - 28px)/8),58px);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#111;--fg:#eee;--m:#aaa}}
+:root[data-theme="dark"]{--bg:#111;--fg:#eee;--m:#aaa}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0 auto;max-width:560px;padding:10px 14px 30px;color:var(--fg);background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(128,128,128,.09) 3px 4px),var(--bg);font:15px/1.5 "Courier New",Courier,monospace}
+h1{margin:0 0 8px;padding:6px;text-align:center;font-size:22px;letter-spacing:.2em;border:4px double var(--fg)}
+h3{margin:14px 0 4px;border-bottom:2px solid var(--fg)}
+.b,select{font:inherit;background:var(--bg);color:var(--fg);border:2px solid var(--fg);padding:6px 10px;margin:3px 3px 3px 0;cursor:pointer}
+.b.on,.b:active{background:var(--fg);color:var(--bg)}
+.ll .b{display:block;width:100%;text-align:left}
+#bd{display:grid;grid-template-columns:repeat(8,var(--c));width:calc(8*var(--c) + 8px);border:4px double var(--fg);margin:8px auto;background:#fff}
+.q{height:var(--c);position:relative;display:flex;align-items:center;justify-content:center;font-size:calc(var(--c)*.78);line-height:1;background:#fff;color:#000;user-select:none;cursor:pointer}
+.q.d{background:repeating-linear-gradient(45deg,#000 0 1px,#fff 1px 4px)}
+.q.w{color:#fff;text-shadow:-1px 0 #000,1px 0 #000,0 -1px #000,0 1px #000,0 0 3px #000}
+.q.k{color:#000;text-shadow:0 0 2px #fff,0 0 1px #fff}
+.s{box-shadow:inset 0 0 0 4px #000,inset 0 0 0 6px #fff}
+.l{box-shadow:inset 0 0 0 2px #000,inset 0 0 0 3px #fff}
+.h{animation:bl 1s steps(2) infinite}@keyframes bl{50%{box-shadow:inset 0 0 0 4px #000,inset 0 0 0 6px #fff}}
+.t::after{content:"";position:absolute;width:30%;height:30%;border-radius:50%;background:#000;border:2px solid #fff}
+.q i{position:absolute;font:bold 10px "Courier New",monospace;color:#000;background:#fff;padding:0 1px;text-shadow:none}
+.q i.r{top:0;left:0}.q i.f{bottom:0;right:0}
+#st{min-height:1.5em;text-align:center;font-weight:bold}
+.co{border:2px solid var(--fg);padding:8px;margin:8px 0}.co::before{content:"Тренер: ";font-weight:bold}
+#bw{position:relative}#pm{text-align:center;position:absolute;left:0;right:0;top:35%}
+#lg{color:var(--m);font-size:13px;margin-top:6px}
+details{border-bottom:1px dashed var(--fg);padding:6px 0;font-family:Georgia,"Times New Roman",serif;font-size:16px;line-height:1.6}
+summary{cursor:pointer;font:bold 16px "Courier New",monospace}
+#ck{text-align:center;color:var(--m)}u{display:block;text-decoration:none;position:relative;z-index:1;transition:transform .6s ease,opacity .5s}#cl{max-height:200px;overflow-y:auto;border:2px solid var(--fg);padding:2px 8px;font-size:14px}#cl p{margin:4px 0;padding-bottom:4px;border-bottom:1px dotted var(--m)}#qs{font:inherit;border:2px solid var(--fg);background:var(--bg);color:var(--fg);padding:6px;width:60%;margin-top:6px}#rt{white-space:pre-wrap;margin:8px 0}#rl .b{padding:2px 6px;font-size:13px}
+.t::after{z-index:2}.b.bad{font-weight:bold;text-decoration:underline}
+#sp{position:fixed;inset:0;z-index:50;background:var(--bg);color:var(--fg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:20px;transition:opacity .5s;overflow:hidden}
+#sp.off{opacity:0;pointer-events:none}
+#sp::after{content:"";position:absolute;left:0;right:0;height:3px;background:var(--fg);opacity:.15;animation:sc 3s linear infinite}@keyframes sc{from{top:0}to{top:100%}}
+#sk span{display:inline-block;font-size:34px;animation:dr .8s cubic-bezier(.3,1.5,.5,1) both;animation-delay:calc(var(--i)*.14s)}
+@keyframes dr{from{transform:translateY(-140px) rotate(-120deg);opacity:0}}
+#sh{margin:0;letter-spacing:.12em;font-size:22px}#sh::after{content:"█";animation:bk 1s steps(2) infinite}@keyframes bk{50%{opacity:0}}
+:root[data-th="1"]:not(.z){--bg:#000;--fg:#3f6;--m:#2a8}
+[data-th="1"] .q,[data-th="1"] #bd{background:#03160b}
+[data-th="1"] .q.d{background:repeating-linear-gradient(45deg,#3f6 0 1px,#03160b 1px 4px)}
+[data-th="1"] .q.w{color:#c6ffd6;text-shadow:-1px 0 #000,1px 0 #000,0 -1px #000,0 1px #000,0 0 5px #3f6}
+[data-th="1"] .q.k{color:#0b6;text-shadow:-1px 0 #000,1px 0 #000,0 -1px #000,0 1px #000}
+[data-th="1"] .q i{background:#000;color:#3f6}
+:root[data-th="2"]:not(.z){--bg:#2a1b10;--fg:#f4e4c1;--m:#c9a878}
+[data-th="2"] .q{background:linear-gradient(135deg,#f3dfb8,#e2c08a)}
+[data-th="2"] .q.d{background:repeating-linear-gradient(90deg,rgba(0,0,0,.06) 0 2px,transparent 2px 7px),linear-gradient(135deg,#b98655,#8d5a2e)}
+[data-th="2"] #bd{border:4px ridge #7a4d27;background:#7a4d27;box-shadow:0 8px 22px #000a}
+[data-th="2"] .q.w{color:#fff7e3;text-shadow:-1px 0 #3a2210,1px 0 #3a2210,0 -1px #3a2210,0 1px #3a2210,2px 4px 4px #0008}
+[data-th="2"] .q.k{color:#26140a;text-shadow:0 0 1px #000,1px 1px 0 #7b5530,2px 4px 4px #0008}
+[data-th="2"] .q i{background:#7a4d27;color:#f4e4c1}
+:root[data-th="3"]:not(.z){--bg:#1b1d21;--fg:#e6e6e1;--m:#9a9da5}
+[data-th="3"] .q{background:linear-gradient(135deg,#e8e6df,#cdcbc3)}
+[data-th="3"] .q.d{background:linear-gradient(135deg,#7a7e87,#53575f)}
+[data-th="3"] #bd{border:4px outset #8d9199;background:#8d9199;box-shadow:0 8px 22px #000a}
+[data-th="3"] .q.w{color:#fafaf5;text-shadow:-1px 0 #20232a,1px 0 #20232a,0 -1px #20232a,0 1px #20232a,2px 4px 4px #0009}
+[data-th="3"] .q.k{color:#15171b;text-shadow:0 0 2px #fff8,2px 4px 4px #0009}
+[data-th="3"] .q i{background:#8d9199;color:#15171b}
+.pn{border:2px solid var(--fg);padding:12px;margin:14px 0;background:rgba(128,128,128,.07);box-shadow:4px 4px 0 var(--m)}
+.pt{display:flex;align-items:center;gap:8px;margin:-2px 0 10px;font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:bold}.pt::before{content:"◆";font-size:10px}.pt::after{content:"";flex:1;border-top:2px dotted var(--m)}
+.gr{display:grid;grid-template-columns:1fr 1fr;gap:10px}.f{display:flex;flex-direction:column;gap:4px;min-width:0;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--m)}.f.w2{grid-column:1/-1}
+.pn select{appearance:none;-webkit-appearance:none;width:100%;height:44px;margin:0;padding:0 34px 0 12px;border-radius:0;font-size:15px;letter-spacing:0;text-transform:none;text-overflow:ellipsis;background-color:var(--bg);background-image:linear-gradient(45deg,transparent 50%,var(--fg) 50%),linear-gradient(135deg,var(--fg) 50%,transparent 50%);background-position:calc(100% - 19px) 19px,calc(100% - 13px) 19px;background-size:6px 6px;background-repeat:no-repeat}.pn select:disabled{opacity:.55}
+.pn .b{margin:0;min-height:44px;border-radius:0}.pn .big{width:100%;margin-top:12px;font-size:17px;letter-spacing:.12em}
+.ab{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.ab .b:last-child{grid-column:1/-1}
+.ai{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:13px}
+.sub{border:2px dashed var(--m);padding:10px;margin-top:12px;display:grid;gap:8px;font-size:13px}
+.ta{width:100%;font:11px monospace;border:2px solid var(--fg);background:var(--bg);color:var(--fg);border-radius:0;padding:8px}
+.ig{display:flex;margin-top:10px}.ig #qs{flex:1;min-width:0;width:auto;height:44px;margin:0;border-right:0;border-radius:0;font-size:15px}
+.pn #cl{border:0;padding:0}#cl:empty::before{content:"Здесь появятся подсказки и комментарии тренера.";color:var(--m);font-size:13px}
+.pn #lg{margin:0;max-height:90px;overflow-y:auto}#lg:empty::before{content:"Ходы партии появятся здесь."}
+#nc{font:bold 28px 'Courier New',monospace;letter-spacing:.35em;text-align:center;padding:10px 0 10px .35em;border:2px solid var(--fg);background:var(--bg);user-select:all}#ni{font:bold 18px 'Courier New',monospace;text-transform:uppercase;letter-spacing:.25em;text-align:center}
+.pn a{color:inherit;text-decoration:underline}
+.gs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 10px}.gs .b{display:block;text-align:center;text-decoration:none;margin:0}a.b{color:var(--fg)}a.b.on{color:var(--bg)}
+.q u.m{font-size:1.6em}
+</style></head><body>
+<h1>● ШАШКИ</h1>
+<div class="gs"><a class="b" href="index.html">♞ Шахматы</a><a class="b on" href="shashki.html">● Шашки</a></div>
+<div><button class="b on" id="tg" onclick="show('g')">Игра</button><button class="b" id="tb" onclick="show('b')">Правила</button></div>
+<div id="bw"><div id="bd"></div><div id="ck"></div><div id="st"></div><div class="co" id="co"></div></div>
+<section id="pg">
+<div class="pn"><div class="pt">Новая партия</div>
+<div class="gr">
+<label class="f w2">Режим<select id="pmode" onchange="setPM(this.value)"><option value="bot">Против бота</option><option value="hot">Вдвоём на одном устройстве</option><option value="net">По сети (2 устройства)</option></select></label>
+<label class="f w2">Соперник<select id="lv_" onchange="lvl=+this.value;say('Уровень бота изменён.')"><option value="1">1 · Новичок (ходит случайно)</option><option value="2">2 · Любитель</option><option value="3">3 · Клубный игрок</option><option value="4">4 · Сильный (движок)</option><option value="5" selected>5 · Claude — настоящий ИИ</option><option value="6">6 · Движок — максимум</option></select></label>
+<label class="f">Ваш цвет<select id="sd" onchange="me=this.value;newGame()"><option value="w">Белые</option><option value="b">Чёрные</option></select></label>
+<label class="f">Таймер<select id="tm" onchange="newGame()"><option value="0">Без таймера</option><option value="5">5 мин</option><option value="10" selected>10 мин</option><option value="30">30 мин</option><option value="60">60 мин</option><option value="90">90 мин</option></select></label>
+</div>
+<div id="np" class="sub" hidden><div id="ns"></div><div class="gr"><button class="b" onclick="netHost()">Создать комнату</button><button class="b" onclick="netJoin()">Войти по коду</button></div><div id="nc" hidden></div><button class="b" id="nb" hidden onclick="netShare()">📤 Отправить код</button><div class="gr" id="nj" hidden><input id="ni" class="ta" maxlength="6" placeholder="КОД" autocapitalize="characters" autocomplete="off"><button class="b" onclick="netGo()">Подключить</button></div><button class="b" onclick="netTest()">🔧 Проверить связь</button><pre id="nd" class="ta" hidden style="white-space:pre-wrap;margin:0"></pre></div>
+<button class="b on big" id="go" onclick="startGame()">▶ Начать игру</button>
+<div id="gb" class="ab" hidden><button class="b" onclick="undo()">↩ Вернуть ход</button><button class="b" onclick="hnt()">💡 Подсказка</button><button class="b" onclick="resign()">⚑ Сдаться</button><button class="b" onclick="FP=!FP;draw()">🔄 Доска</button><button class="b" onclick="newGame()">Новая игра</button></div>
+</div>
+<div class="pn"><div class="pt">Заметки тренера</div><div id="cl"></div><div class="ig"><input id="qs" placeholder="Спросите тренера…" onkeydown="if(event.key=='Enter')chat()"><button class="b" onclick="chat()">Спросить</button></div></div>
+<div class="pn"><div class="pt">Ход партии</div><div id="lg"></div></div>
+<div class="pn"><div class="pt">ИИ-тренер</div><div class="ai"><span id="as"></span><button class="b" onclick="$('#kp').hidden=!$('#kp').hidden">🔑 Вход ИИ</button></div>
+<div id="kp" class="sub" hidden><div>В claude.ai вход не нужен: ИИ работает через ваш аккаунт Claude. В скачанном файле вставьте ключ API с console.anthropic.com — он хранится только в этом браузере.</div><input id="ak" type="password" class="ta" style="font:15px 'Courier New',monospace" placeholder="sk-ant-…"><div class="gr"><button class="b" onclick="saveKey()">Войти</button><button class="b" onclick="saveKey(1)">Выйти</button></div></div></div>
+<div class="pn"><div class="pt">Оформление</div><div class="gr"><label class="f">Тема<select id="th" onchange="setTh(this.value)"><option value="0">Чёрно-белая</option><option value="1">Чёрно-зелёная</option><option value="2">Дерево</option><option value="3">Камень</option></select></label><label class="f">Звук<select id="sn" onchange="setSn(this.value)"><option value="0">Выкл</option><option value="0.3">Тихо</option><option value="0.6">Средне</option><option value="1">Громко</option></select></label></div></div>
+
+</section>
+<section id="pb" hidden>
+<details open><summary>1. Доска и расстановка</summary><p>Играют на тёмных полях доски 8×8. Левое нижнее поле (a1) у каждого игрока тёмное. У каждого по 12 шашек на трёх ближайших рядах. Первыми ходят белые.</p></details>
+<details><summary>2. Как ходят</summary><p>Простая шашка ходит по диагонали вперёд на одно свободное поле. Дамка ходит по диагонали на любое число свободных полей вперёд и назад.</p></details>
+<details><summary>3. Бой (взятие)</summary><p>Бить обязательно. Простая шашка бьёт и вперёд, и назад: перепрыгивает через шашку соперника, стоящую рядом, на свободное поле сразу за ней. Дамка бьёт издалека: через шашку на любом расстоянии, если за ней есть свободное поле, и встаёт на любое свободное поле за побитой. Если с какого-то из них можно бить дальше, нужно встать именно на такое.<br><br>Бой надо продолжать, пока это возможно. Если боёв несколько, выбирайте любой: брать больше шашек не обязательно. Побитые шашки снимают после окончания хода, и одну шашку нельзя бить дважды.</p></details>
+<details><summary>4. Дамка</summary><p>Простая шашка, дошедшая до последнего ряда соперника, становится дамкой. Если это случилось во время боя и можно бить дальше как дамка, бой продолжается уже дамкой.</p></details>
+<details><summary>5. Конец партии</summary><p>Проигрывает тот, у кого не осталось шашек или нет ходов. Игра сама объявляет ничью, если: позиция повторилась 3 раза; 15 ходов подряд сделаны только дамками без взятий и без ходов простых шашек; три или больше дамок не выиграли у одной дамки за 15 ходов. Ничья по соглашению игроков в приложении не предусмотрена.</p></details>
+<details><summary>6. Запись ходов</summary><p>Поля называются как в шахматах (a1 … h8). Запись c3-d4 — обычный ход, c3:e5 — взятие, c3:e5:g7 — взятие нескольких шашек за один ход.</p></details>
+<details><summary>7. Советы новичку</summary><p>Держите шашки на центральных полях и не торопитесь уводить шашки с задней линии. Перед каждым ходом проверьте, не подставляете ли шашку под бой. Старайтесь первыми пройти в дамки. Помните: обязательное взятие можно использовать как ловушку и для соперника, и для себя.</p></details>
+</section>
+<script>
+const SRC=document.currentScript?document.currentScript.textContent:'';
+const $=s=>document.querySelector(s),sleep=ms=>new Promise(r=>setTimeout(r,ms)),fmt=x=>{x=Math.ceil(x);return(x/60|0)+':'+String(x%60).padStart(2,'0')};
+const DR=[[-1,-1],[-1,1],[1,-1],[1,1]],nm_=i=>'abcdefgh'[i&7]+(8-(i>>3)),col=p=>p?p.toLowerCase():'',isK=p=>p=='W'||p=='B';
+function init(){const b=Array(64).fill('');for(let i=0;i<64;i++){const r=i>>3,c=i&7;if((r+c)%2){if(r<3)b[i]='b';else if(r>4)b[i]='w'}}return{b,t:'w',q:0,n3:0}}
+function caps1(b,pos,king,took,opp){const o=[];for(const[dr,dc]of DR){let r=(pos>>3)+dr,c=(pos&7)+dc;if(king)while(r>=0&&r<8&&c>=0&&c<8&&!b[r*8+c]){r+=dr;c+=dc}
+if(r<0||r>7||c<0||c>7)continue;const a=r*8+c,q=b[a];if(!q||col(q)!=opp||took.includes(a))continue;const L=[];let lr=r+dr,lc=c+dc;while(lr>=0&&lr<8&&lc>=0&&lc<8&&!b[lr*8+lc]){L.push(lr*8+lc);if(!king)break;lr+=dr;lc+=dc}if(L.length)o.push({a,L})}return o}
+function seqs(b,i,t){const res=[],opp=t=='w'?'b':'w',pc=b[i],last=t=='w'?0:7;b[i]='';
+const rec=(pos,king,path,took)=>{const cs=caps1(b,pos,king,took,opp);if(!cs.length){if(path.length)res.push({f:i,p:path,x:took});return}
+for(const{a,L}of cs){const tk=took.concat(a),M=L.map(l=>({l,k:king||(l>>3)==last})),w=M.filter(m=>caps1(b,m.l,m.k,tk,opp).length);for(const m of(w.length?w:M))rec(m.l,m.k,path.concat(m.l),tk)}};
+rec(i,isK(pc),[],[]);b[i]=pc;return res}
+function quiet(b,i,t){const k=isK(b[i]),o=[],fw=t=='w'?-1:1;for(const[dr,dc]of DR){if(!k&&dr!=fw)continue;let r=(i>>3)+dr,c=(i&7)+dc;while(r>=0&&r<8&&c>=0&&c<8&&!b[r*8+c]){o.push({f:i,p:[r*8+c],x:[]});if(!k)break;r+=dr;c+=dc}}return o}
+function gen(s){const b=s.b,t=s.t,all=[];for(let i=0;i<64;i++)if(col(b[i])==t)all.push(...seqs(b,i,t));if(all.length)return all;for(let i=0;i<64;i++)if(col(b[i])==t)all.push(...quiet(b,i,t));return all}
+function mk(s,m){const b=s.b.slice(),p=b[m.f],t=s.t,lr=t=='w'?0:7;m.x.forEach(a=>b[a]='');b[m.f]='';const e=m.p[m.p.length-1],k=isK(p)||m.p.some(l=>(l>>3)==lr);b[e]=k?p.toUpperCase():p;
+let W_=0,B_=0,Wk=0,Bk=0;for(const x of b){if(!x)continue;if(col(x)=='w'){W_++;if(isK(x))Wk++}else{B_++;if(isK(x))Bk++}}
+const lop=(Wk>=3&&Wk==W_&&B_==1&&Bk==1)||(Bk>=3&&Bk==B_&&W_==1&&Wk==1);return{b,t:t=='w'?'b':'w',q:m.x.length||!isK(p)?0:s.q+1,n3:lop?s.n3+1:0}}
+const key=s=>s.b.map(x=>x||'.').join('')+s.t,mvTxt=m=>nm_(m.f)+(m.x.length?':':'-')+m.p.map(nm_).join(m.x.length?':':'-');
+function status(s,H){if(!gen(s).length)return'lost';if(s.q>=30)return'q';if(s.n3>=30)return'n3';if(H&&H.filter(k=>k==key(s)).length>=3)return'rep';return''}
+function ev(s){let v=0;for(let i=0;i<64;i++){const p=s.b[i];if(!p)continue;const w=col(p)=='w',r=i>>3,c=i&7,cn=3.5-Math.max(Math.abs(r-3.5),Math.abs(c-3.5));let x;if(isK(p))x=330+cn*4;else{const a=w?7-r:r;x=100+a*5+(a==0?8:0)+(c>1&&c<6&&a>2?3:0)}v+=w?x:-x}return s.t=='w'?v:-v}
+let STOP=0,TL=0,ND=0;
+function nm(s,d,a,B,p){if(TL&&(++ND&255)==0&&Date.now()>TL)STOP=1;if(STOP)return 0;if(s.q>=30||s.n3>=30)return 0;const L=gen(s);if(!L.length)return p-9e4;const cap=L[0].x.length>0;if(d<=0&&!(cap&&p<32))return ev(s);
+L.sort((x,y)=>y.x.length-x.x.length);let best=-1e9;for(const m of L){const v=-nm(mk(s,m),d-1,-B,-a,p+1);if(STOP)return 0;if(v>best)best=v;if(v>a)a=v;if(a>=B)break}return best}
+function think(s,mx,ms){STOP=0;ND=0;TL=Date.now()+ms;let Q=gen(s).map(m=>({m,v:0})),dd=0;
+for(let d=1;d<=mx;d++){let a=-1e9;const cur=[];for(const x of Q){const v=-nm(mk(s,x.m),d-1,-1e9,-a,1);if(STOP)break;cur.push({m:x.m,v});if(v>a)a=v}if(STOP)break;cur.sort((p,q)=>q.v-p.v);Q=cur;dd=d;if(Q[0].v>8e4)break}
+TL=0;STOP=0;Q.d=dd||1;return Q}
+let H=[];
+function bot(s,l){const L=gen(s);if(l==1||L.length==1)return L[Math.random()*L.length|0];const cf={2:[3,150],3:[6,500],4:[10,1500],6:[14,3200]}[l]||[8,1000],Z=think(s,cf[0],cf[1]);
+Z.forEach(x=>{if(H.filter(k=>k==key(mk(s,x.m))).length>=2)x.v=0;if(l==2)x.v+=Math.random()*60});Z.sort((a,b)=>b.v-a.v);return Z[0].m}
+const why=(s,m)=>m.x.length?'берёт '+m.x.length+' '+(m.x.length==1?'шашку':m.x.length<5?'шашки':'шашек'):isK(s.b[m.f])?'передвигает дамку':(m.p[0]>>3)==(s.t=='w'?0:7)?'ведёт шашку в дамки':'продвигает шашку';
+function coach(s,m){const q=think(s,6,400),b=q[0],id=mvTxt(m);let p=b.v;if(mvTxt(b.m)!=id){STOP=0;ND=0;TL=Date.now()+300;p=-nm(mk(s,m),q.d-1,-1e9,1e9,1);if(STOP)p=(q.find(x=>mvTxt(x.m)==id)||{v:b.v-150}).v;TL=0;STOP=0}
+const d=b.v-p,n=mk(s,m),L=gen(n);let t=d<=30?'✔ Хороший ход: он '+why(s,m)+'.':d<=100?'👍 Неплохо, но точнее было '+mvTxt(b.m)+' — он '+why(s,b.m)+'.':'⚠ Ошибка! Лучше было '+mvTxt(b.m)+' — он '+why(s,b.m)+'.';
+if(L.length&&L[0].x.length&&d>30)t+=' Теперь соперник может взять '+Math.max(...L.map(x=>x.x.length))+' шаш.';return t}
+const desc=s=>['w','b'].map(c=>(c=='w'?'Белые: ':'Чёрные: ')+s.b.map((p,i)=>col(p)==c?nm_(i)+(isK(p)?'(дамка)':''):'').filter(Boolean).join(' ')).join('. ');
+
+const UE=['pointerup','touchend','click','keydown'],un=()=>{au();if(AC&&AC.state=='running')UE.forEach(t=>removeEventListener(t,un,true))};UE.forEach(t=>addEventListener(t,un,true));
+function au(){if(!AC){try{AC=new(window.AudioContext||window.webkitAudioContext)();try{navigator.audioSession.type='playback'}catch(e){}try{const b=AC.createBuffer(1,1,22050),u=AC.createBufferSource();u.buffer=b;u.connect(AC.destination);u.start(0)}catch(e){}}catch(e){}}if(AC&&AC.state!='running')try{AC.resume().catch(()=>{})}catch(e){}return AC}
+function tn(f,d,ty,v,t0,f2){const a=AC,o=a.createOscillator(),g=a.createGain(),t=a.currentTime+t0;o.type=ty;o.frequency.setValueAtTime(f,t);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t+d);g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(Math.max(0.0002,v*DB.sn),t+.01);g.gain.exponentialRampToValueAtTime(0.0001,t+d);o.connect(g).connect(a.destination);o.start(t);o.stop(t+d+.02)}
+function nz(d,v,fc){const a=AC,n=a.sampleRate*d|0,b=a.createBuffer(1,n,a.sampleRate),x=b.getChannelData(0);for(let i=0;i<n;i++)x[i]=(Math.random()*2-1)*(1-i/n);const s=a.createBufferSource(),f=a.createBiquadFilter(),g=a.createGain();s.buffer=b;f.type='lowpass';f.frequency.value=fc;g.gain.value=v*DB.sn;s.connect(f).connect(g).connect(a.destination);s.start()}
+function snd(k,dl){if(dl)return void setTimeout(()=>snd(k),dl);if(!(DB.sn>0))return;const a=au();if(!a||a.state!='running')return;try{const w=DB.th>=2,tap=c=>{if(w){nz(.07,c?1:.6,DB.th==2?900:2600);tn(DB.th==2?140:220,.09,'sine',c?.9:.5,0)}else tn(c?170:320,.07,'square',.22,0,c?80:160)};
+if(k=='move')tap(0);else if(k=='cap'){tap(1);if(!w)tn(120,.1,'square',.2,.04,60)}
+else if(k=='castle'){tap(0);setTimeout(()=>tap(0),110)}
+else if(k=='check'){tap(1);tn(880,.1,'square',.18,.08);tn(1175,.14,'square',.18,.2)}
+else if(k=='promo')[523,659,784,1047].forEach((f,i)=>tn(f,.1,'triangle',.25,i*.07))
+else if(k=='ok'){tn(660,.1,'triangle',.3,0);tn(990,.16,'triangle',.3,.1)}
+else if(k=='err')tn(160,.22,'sawtooth',.2,0,110)
+else if(k=='start')[392,523,659].forEach((f,i)=>tn(f,.12,'square',.18,i*.09))
+else if(k=='tick')tn(1000,.05,'square',.15,0)
+else if(k=='win')[523,659,784,1047,1319].forEach((f,i)=>tn(f,.16,'triangle',.28,i*.11))
+else if(k=='lose')[392,330,262,196].forEach((f,i)=>tn(f,.22,'triangle',.28,i*.16))
+else if(k=='draw'){tn(440,.2,'triangle',.25,0);tn(440,.3,'triangle',.25,.25)}}catch(e){}}
+function setSn(v){DB.sn=+v;dbs();au();snd('ok');setTimeout(()=>{if(+v>0&&(!AC||AC.state!='running'))say('🔊 Браузер пока блокирует звук: коснитесь доски или любой кнопки и проверьте переключатель «Без звука» на боку iPhone.')},500)}
+function setTh(n){n=+n||0;DB.th=n;document.documentElement.dataset.th=n;$('#th').value=n;document.querySelectorAll('#sT .b').forEach((b,i)=>b.classList.toggle('on',i==n));dbs()}
+function setAI(m){$('#as').textContent=m||(SM?'ИИ: подключён через аккаунт Claude ✔':KEY()?'ИИ: ключ API сохранён ✔':'ИИ: не подключён — играет встроенный движок')}
+function saveKey(out){const v=out?'':$('#ak').value.trim();try{localStorage.ak=v}catch(e){}$('#ak').value='';setAI(v?'Проверяю ключ…':'');if(v)ask('Скажи: ok').then(t=>setAI(t?'':'Ключ не принят или нет сети.'))}
+async function ask(p){if(SM)try{return((await Promise.race([SM(p,{cache:false,modelTier:'quick'}),new Promise((_,j)=>setTimeout(j,20000))])).text||'').trim()}catch(e){return''}
+const k=KEY();if(!k)return'';const ac=new AbortController(),tm_=setTimeout(()=>ac.abort(),20000);try{const r=await fetch('https://api.anthropic.com/v1/messages',{signal:ac.signal,method:'POST',headers:{'content-type':'application/json','x-api-key':k,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-5-5',max_tokens:500,messages:[{role:'user',content:p}]})});if(!r.ok){setAI('Ошибка ИИ ('+r.status+'): проверьте ключ.');return''}setAI();return((await r.json()).content||[]).map(x=>x.text||'').join('').trim()}catch(e){return''}finally{clearTimeout(tm_)}}
+async function pub(o){for(let i=0;i<5;i++){try{const r=await fetch(room(),{method:'POST',body:JSON.stringify({...o,f:CID})});if(r.ok)return}catch(e){}await sleep(800*(i+1))}if(!NG)ns('Нет связи с сервером. Проверьте интернет.')}
+async function hist(){try{const r=await fetch(room()+'/json?poll=1&since='+(LI||'all'));if(!r.ok)return false;(await r.text()).split('\n').forEach(l=>{try{const d=JSON.parse(l);if(d.event=='message')rx(d)}catch(x){}});return true}catch(e){return false}}
+function rx(d){if(SEEN[d.id])return;SEEN[d.id]=1;LI=d.id;let m;try{m=JSON.parse(d.message)}catch(e){return}if(m&&m.f!=CID)netMsg(m)}
+function sub(){if(ES)ES.close();try{ES=new EventSource(room()+'/sse');ES.onmessage=e=>{try{const d=JSON.parse(e.data);if(d.event=='message')rx(d)}catch(x){}};ES.onopen=()=>{ns(NG?'✔ Онлайн: соединение с сервером активно.':NR=='h'?'Комната '+RC_+' создана. Ждём второго игрока…':'Подключено. Ждём, пока хозяин начнёт партию…');hist()}}catch(e){}
+hist().then(ok=>{if(!ok&&!NG)ns('Сервер сообщений недоступен из этого окна. Сетевая игра работает в версии на GitHub при наличии интернета.')})}
+function netClose(){if(ES)ES.close();ES=null;RC_='';PEER=null;NG='';NQ=[];SEEN={};LI='';NR='';DB.net=null}
+function netHost(){netClose();NR='h';RC_=Array.from({length:6},()=>AL[Math.random()*AL.length|0]).join('');$('#nc').textContent=RC_;netUI(1,0);ns('Создаю комнату…');sub();netSave()}
+function netJoin(){netClose();NR='g';netUI(0,1);$('#ni').value='';ns('Введите 6-значный код комнаты, который прислал первый игрок, и нажмите «Подключить».')}
+function joinLoop(n){if(NG||NR!='g'||!RC_||n>20)return;pub({t:'join'});setTimeout(()=>joinLoop(n+1),4000)}
+function netGo(){const v=$('#ni').value.toUpperCase().replace(/[^A-Z0-9]/g,'');if(v.length!=6){ns('Код состоит из 6 символов.');return}NR='g';RC_=v;ns('Подключаюсь к комнате…');sub();netSave();setTimeout(()=>joinLoop(0),600)}
+function netShare(){const t='Сыграем в шахматы! Откройте игру, выберите «По сети» → «Войти по коду» и введите код: '+RC_+'\n'+location.href.split('#')[0];if(navigator.share)navigator.share({text:t}).catch(()=>{});else{try{navigator.clipboard.writeText(t);ns('Приглашение скопировано.')}catch(e){}}}
+async function netTest(){const o=[],P=(t,ok)=>{o.push((ok?'✔ ':'✘ ')+t);$('#nd').textContent=o.join('\n')};$('#nd').hidden=false;P('Интернет: '+(navigator.onLine?'есть':'нет'),navigator.onLine);
+P('Окно: '+(window.top!==window?'встроенное (iframe) — запросы к серверу могут блокироваться':'обычная страница'),window.top===window);const tp=NT+'chs26-test'+CID;
+try{const r=await fetch(tp,{method:'POST',body:'ping'});P('Отправка на сервер: HTTP '+r.status,r.ok)}catch(e){P('Отправка не прошла ('+e.message+'). Сервер недоступен или заблокирован.',0);P('Попробуйте другую сеть (Wi-Fi или мобильный интернет) и отключите VPN.',1);return}
+try{const r=await fetch(tp+'/json?poll=1&since=all'),t=await r.text();P('Чтение с сервера: HTTP '+r.status+(t.includes('ping')?'':' (сообщение не найдено)'),r.ok&&t.includes('ping'))}catch(e){P('Чтение не прошло: '+e.message,0)}
+await new Promise(res=>{let ok=0;try{const es=new EventSource(tp+'/sse');es.onmessage=e=>{if(e.data.includes('live')){ok=1;es.close();P('Живой поток (SSE): работает',1);res()}};es.onopen=()=>fetch(tp,{method:'POST',body:'live'}).catch(()=>{});setTimeout(()=>{if(!ok){es.close();P('Живой поток (SSE) не доходит за 8 с. Попробуйте другую сеть, отключите VPN и блокировщики.',0);res()}},8000)}catch(e){P('SSE недоступен: '+e.message,0);res()}});P('Готово. Если есть ✘ — пришлите мне этот список.',1)}
+let DB={th:0,sn:0.6};try{Object.assign(DB,JSON.parse(localStorage.cs||'{}'))}catch(e){}const dbs=()=>{try{localStorage.cs=JSON.stringify(DB)}catch(e){}};
+let S,LOG=[],ST=[],MV=[],CL=[],last=[],hint=[],selF=-1,selP=[],over=0,busy=0,me='w',lvl=5,PM='bot',started=0,tab='g',TM=null,GID=0,NA=0,FP=false,SM=null,HN=0,UN=0,LT=Date.now(),PC=0,AC=null,LW=0,WK=null,WR=0,WID=0,WP={};
+const KEY=()=>{try{return localStorage.ak||''}catch(e){return''}},hasAI=()=>!!(SM||KEY()),say=t=>$('#co').textContent=t,ns=t=>$('#ns').textContent=t,canMove=()=>!busy&&started&&!over&&tab=='g'&&(PM=='hot'||S.t==me);
+const NT=(typeof window!='undefined'&&window.NT_URL)||'https://ntfy.sh/',CID=Math.random().toString(36).slice(2,8),AL='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+let RC_='',ES=null,SEEN={},PEER=null,NG='',NQ=[],LI='',NR='';
+const room=()=>NT+'dr26-'+RC_,netUI=(c,j)=>{$('#nc').hidden=!c;$('#nb').hidden=!c;$('#nj').hidden=!j},send=o=>{pub(o)},netSave=()=>{};
+function wInit(){if(!SRC)return;try{const pre="const stub=()=>new Proxy(function(){},{get:(t,k)=>k==='value'?'10':k===Symbol.toPrimitive?()=>'':k==='querySelectorAll'?()=>[]:stub(),set:()=>true,apply:()=>stub()});self.document=stub();self.localStorage={};self.IS_W=1;\n",
+post="\nself.onmessage=e=>{const d=e.data;let r=null;try{if(d.k=='bot'){H=d.H;r=bot(d.s,d.l)}else if(d.k=='think'){const q=think(d.s,d.mx,d.ms);r={Q:q.map(x=>({m:x.m,v:x.v})),d:q.d}}}catch(x){}postMessage({id:d.id,r})};postMessage({ready:1});";
+WK=new Worker(URL.createObjectURL(new Blob([pre+SRC+post],{type:'text/javascript'})));WK.onmessage=e=>{const d=e.data;if(d.ready){WR=1;return}const f=WP[d.id];if(f){delete WP[d.id];f(d.r)}};WK.onerror=wDie}catch(e){WK=null}}
+function wDie(){if(WK)WK.terminate();WK=null;WR=0;const q=Object.values(WP);WP={};q.forEach(f=>f(null))}
+function W(msg,ms){return new Promise(res=>{if(!WK||!WR)return res(null);const id=++WID,t=setTimeout(wDie,ms+4000);WP[id]=r=>{clearTimeout(t);res(r)};WK.postMessage({...msg,id})})}
+function draw(){const B=$('#bd'),fl=(me=='b'&&PM!='hot')!=FP,L=canMove()?gen(S):[],C=selF>=0?L.filter(m=>m.f==selF&&selP.every((x,j)=>m.p[j]==x)):[],tg=C.filter(m=>m.p.length>selP.length).map(m=>m.p[selP.length]);B.innerHTML='';
+for(let k=0;k<64;k++){const i=fl?63-k:k,p=S.b[i],r=i>>3,c=i&7,d=document.createElement('div');d.className='q'+((r+c)%2?' d':'')+(i==selF||selP.includes(i)?' s':'')+(last.includes(i)?' l':'')+(hint.includes(i)?' h':'')+(tg.includes(i)?' t':'')+(p?(col(p)=='w'?' w':' k'):'');
+d.dataset.i=i;d.innerHTML=(p?'<u'+(isK(p)?'':' class="m"')+'>'+(isK(p)?'♛':'●')+'\uFE0E</u>':'')+(k%8==0?'<i class=r>'+(8-r)+'</i>':'')+(k>55?'<i class=f>'+'abcdefgh'[c]+'</i>':'');d.onclick=()=>click(i);B.appendChild(d)}
+$('#lg').textContent=LOG.map((x,i)=>i%2?x:(i/2+1|0)+'. '+x).join(' ')}
+function click(i){if(!canMove())return;const L=gen(S),p=S.b[i];
+if(selF>=0){const C=L.filter(m=>m.f==selF&&selP.every((x,j)=>m.p[j]==x)),N=C.filter(m=>m.p[selP.length]==i);if(N.length){selP.push(i);const ext=N.filter(m=>m.p.length>selP.length);if(N.length==1||!ext.length){go(N[0]);return}draw();return}}
+if(col(p)==S.t&&L.some(m=>m.f==i)){selF=i;selP=[];draw()}else{selF=-1;selP=[];if(col(p)==S.t){snd('err');$('#st').textContent=L.length&&L[0].x.length?'Нужно бить! Выберите шашку, которая может взять.':'У этой шашки нет ходов.'}draw()}}
+const go=m=>PM=='bot'?um(m):(play(m),PM=='net'&&send({t:'mv',g:NG,n:MV.length,u:mvTxt(m),tm:TM}));
+async function um(m){const s0=S,g=GID,p=LOG.length+1;play(m);say('Тренер обдумывает ваш ход…');await sleep(700+Math.random()*700);if(g!=GID||LOG.length<p)return;const c=coach(s0,m);note(c,p);
+const t=await ask(`Ты добрый тренер по русским шашкам для новичка. Позиция до хода: ${desc(s0)}. Ученик сыграл ${mvTxt(m)}. Вывод движка: ${c} Объясни по-русски простыми словами в 2–3 предложениях, что делает этот ход и что учесть дальше. Без списков.`);if(g==GID&&t&&LOG.length>=p)note('🤖 '+t,p)}
+function play(m){busy=1;anim(m,()=>{busy=0;play_(m)})}
+function play_(m){MV.push(m);ST.push({S,H:H.slice(),n:LOG.length});const pr=!isK(S.b[m.f])&&isK(mk(S,m).b[m.p[m.p.length-1]]);S=mk(S,m);H.push(key(S));last=[m.f,m.p[m.p.length-1]];selF=-1;selP=[];hint=[];const r=status(S,H);LOG.push(mvTxt(m));
+snd(pr?'promo':m.x.length?'cap':'move');over=r?1:0;$('#st').textContent=r?endTxt(r):((S.t==me||PM=='hot')&&gen(S)[0].x.length?'Нужно бить!':'');draw();save();if(over)fin();else if(PM=='bot'&&S.t!=me)botMove()}
+function anim(m,cb){if(NA){NA=0;cb();return}const cell=i=>$('#bd [data-i="'+i+'"]'),a=cell(m.f),u=a&&a.querySelector('u');if(!u){cb();return}const A=a.getBoundingClientRect();let k=0;u.style.zIndex=9;
+const step=()=>{if(k>=m.p.length){setTimeout(cb,120);return}const x=m.x[k],cx=x!==undefined&&cell(x)&&cell(x).querySelector('u');if(cx){cx.style.transition='opacity .25s';cx.style.opacity=0}const c=cell(m.p[k]);if(!c){cb();return}const B=c.getBoundingClientRect();u.style.transition='transform .26s ease';u.style.transform='translate('+(B.left-A.left)+'px,'+(B.top-A.top)+'px)';k++;setTimeout(step,290)};step()}
+function endTxt(r){if(r=='lost')return PM=='hot'?'Победили '+(S.t=='w'?'чёрные':'белые')+'.':S.t==me?(PM=='net'?'Соперник':'Бот')+' победил.':'Вы победили! 🎉';return{q:'Ничья: 15 ходов только дамками без взятий.',n3:'Ничья: три дамки не выиграли за 15 ходов.',rep:'Ничья: позиция повторилась 3 раза.'}[r]}
+function fin(){DB.dcur=null;dbs();note('Партия окончена.');const t=$('#st').textContent;snd(/Вы победили|Соперник сдался/.test(t)?'win':/Ничья/.test(t)?'draw':PM=='hot'||/Победили/.test(t)?'win':'lose',700)}
+async function botMove(){const g=GID,s0=S,t0=Date.now(),L=gen(s0);busy=1;$('#st').textContent='Бот думает…';let m=null,sy='';
+if(lvl==5&&hasAI()&&L.length>1){const r=await W({k:'think',s:s0,mx:8,ms:600},600),Q=r?r.Q:think(s0,6,500),top=Q.slice(0,5).map(x=>mvTxt(x.m)+' ('+(x.v/100).toFixed(1)+')').join(', '),
+t=await ask(`Ты — соперник новичка в русских шашках, играешь ${s0.t=='w'?'белыми':'чёрными'}. Позиция: ${desc(s0)}. Все допустимые ходы (бить обязательно): ${L.map(mvTxt).join(' ')}. Лучшие по оценке движка: ${top}. Играй живо, не подставляйся. Ответь строго JSON: {"move":"c3-d4","say":"реплика до 12 слов по-русски"}`),mt=t.match(/"move"\s*:\s*"([^"]+)"/),sm=t.match(/"say"\s*:\s*"([^"]*)"/);if(mt)m=L.find(x=>mvTxt(x)==mt[1]);if(sm)sy=sm[1]}
+else if(lvl==5&&!bot.w){bot.w=1;note('ИИ не подключён (кнопка «🔑 Вход ИИ») — играет встроенный движок.')}
+if(!m){if(lvl==5&&hasAI()&&L.length>1&&!bot.f){bot.f=1;note('ИИ не ответил вовремя — ход сделал встроенный движок.')}await sleep(30);m=L.length==1?L[0]:(await W({k:'bot',s:s0,l:lvl==5?6:lvl,H},5000))||bot(s0,lvl==5?6:lvl)}
+const w=900+Math.random()*1100-(Date.now()-t0);if(w>0)await sleep(w);while(tab!='g'&&g==GID)await sleep(300);if(g!=GID)return;busy=0;if(over)return;play(m);if(sy)note('♟ Claude: '+sy,LOG.length+1)}
+function note(t,p){CL.push({p:p??LOG.length,t});say(t);renderCL()}
+function renderCL(){const d=$('#cl');d.innerHTML='';CL.forEach(e=>{const q=document.createElement('p');q.textContent=(e.p?'['+e.p+'] ':'')+e.t;d.appendChild(q)});d.scrollTop=d.scrollHeight}
+async function chat(){const q=$('#qs').value.trim();if(!q)return;$('#qs').value='';CL.push({p:LOG.length,t:'🙋 '+q});renderCL();say('Тренер думает…');await sleep(500);const t=await ask(`Ты тренер по русским шашкам для новичка. Отвечай по-русски, ясно, до 4 предложений. Ходы партии: ${LOG.join(' ')||'партия не начата'}. Позиция: ${desc(S)}. Вопрос ученика: ${q}`);note(t?'🤖 '+t:'ИИ-тренер сейчас недоступен. Загляните во вкладку «Правила».')}
+async function hnt(){if(busy||over||!started||PM=='net'||(PM=='bot'&&S.t!=me))return;HN++;const r=await W({k:'think',s:S,mx:8,ms:500},500),Q=r?r.Q:think(S,6,400),b=Q[0].m;hint=[b.f,...b.p];draw();note('💡 Подсказка: '+mvTxt(b)+' — этот ход '+why(S,b)+'.')}
+function undo(){if(busy||!ST.length||PM=='net'||!started)return;UN++;let z=ST.pop();if(PM=='bot'&&z.S.t!=me&&ST.length)z=ST.pop();S=z.S;H=z.H;LOG.length=MV.length=z.n;CL=CL.filter(e=>e.p<=z.n);renderCL();over=0;last=[];hint=[];selF=-1;selP=[];$('#st').textContent='';draw();save();if(PM=='bot'&&S.t!=me)botMove()}
+function resign(){if(!over&&!busy&&started){over=1;$('#st').textContent=PM=='hot'?(S.t=='w'?'Белые':'Чёрные')+' сдались.':PM=='net'?'Вы сдались. Победа соперника.':'Вы сдались. Победа бота.';if(PM=='net')send({t:'res',g:NG});fin()}}
+function lock(v){['lv_','sd','tm','pmode'].forEach(i=>$('#'+i).disabled=!!v);$('#go').hidden=!!v;$('#gb').hidden=!v}
+function newGame(){S=init();H=[key(S)];LOG=[];ST=[];MV=[];CL=[];last=[];hint=[];selF=-1;selP=[];over=0;busy=0;started=0;GID++;HN=UN=0;DB.dcur=null;renderCL();setT();lock(0);$('#st').textContent='';say('Выберите режим, соперника, цвет и таймер, затем нажмите «Начать игру».');draw()}
+function startGame(rem){if(started)return;if(PM=='net'&&!rem){if(NR!='h'||!PEER){say(NR=='g'?'Ждите, пока хозяин начнёт игру.':'Сначала создайте комнату и дождитесь второго игрока.');return}NG=Math.random().toString(36).slice(2,8);send({t:'start',g:NG,c:me=='w'?'b':'w',tm:$('#tm').value})}
+started=1;lock(1);setT();$('#st').textContent='';snd('start');say(PM=='hot'?'Игра вдвоём: ходите по очереди, белые первыми. Доску можно перевернуть кнопкой «🔄 Доска».':PM=='net'?'Сетевая партия началась. Ваш цвет — '+(me=='w'?'белый':'чёрный')+'.':me=='w'?'Партия началась! Вы — белые и ходите первыми. Помните: бить обязательно.':'Партия началась! Вы — чёрные, бот ходит первым.');draw();if(PM=='bot'&&me=='b')botMove()}
+function pmUI(){$('#lv_').parentNode.hidden=PM!='bot';$('#np').hidden=PM!='net';$('#sd').parentNode.hidden=PM=='hot'}
+function setPM(v){netClose();PM=v;$('#pmode').value=v;ns('Один игрок создаёт комнату и отправляет код, второй входит по коду.');netUI(0,0);pmUI();newGame()}
+function setT(){const v=+$('#tm').value;TM=v?{w:v*60,b:v*60}:null;ck()}
+function ck(){$('#ck').textContent=TM?(PM=='bot'?'⏱ Вы '+fmt(TM[me])+' · Бот '+fmt(TM[me=='w'?'b':'w']):'⏱ Белые '+fmt(TM.w)+' · Чёрные '+fmt(TM.b)):'⏱ Без таймера'}
+setInterval(()=>{const n_=Date.now(),dt=Math.min(2,(n_-LT)/1000);LT=n_;if(!TM||!started||over||tab!='g')return;const s=S.t;TM[s]-=dt;if(TM[s]<=0){TM[s]=0;over=1;$('#st').textContent=PM=='hot'?'Время вышло! Победили '+(s=='w'?'чёрные':'белые')+'.':'Время вышло! '+(s==me?(PM=='bot'?'Бот':'Соперник')+' победил.':'Вы победили!');fin()}
+if(TM[s]<=10&&TM[s]>0&&(PM=='hot'||s==me)&&Math.ceil(TM[s])!=LW){LW=Math.ceil(TM[s]);snd('tick')}ck();if(++PC%5==0)save()},1000);
+function save(){if(MV.length&&PM!='net'){DB.dcur={u:MV.map(mvTxt),me,lv:lvl,pm:PM,tm:TM};dbs()}}
+function restore(c){if(!c||!c.u||!c.u.length||c.pm=='net')return;let s=init(),h=[key(s)];const ms=[],st=[],lg=[];for(const u of c.u){const m=gen(s).find(x=>mvTxt(x)==u);if(!m)return;st.push({S:s,H:h.slice(),n:ms.length});ms.push(m);lg.push(u);s=mk(s,m);h.push(key(s))}
+me=c.me;lvl=c.lv;PM=c.pm;$('#pmode').value=PM;$('#sd').value=me;$('#lv_').value=lvl;pmUI();DB.dcur=c;MV=ms;S=s;H=h;ST=st;LOG=lg;const m=ms[ms.length-1];last=[m.f,m.p[m.p.length-1]];started=1;over=0;lock(1);TM=c.tm||null;ck();
+const r=status(S,H);if(r){over=1;$('#st').textContent=endTxt(r)}say('♻ Партия восстановлена: продолжайте с того же места.');draw();if(!over&&PM=='bot'&&S.t!=me)botMove()}
+function netMsg(m){if(m.t=='join'){if(NR=='h'&&(!PEER||PEER==m.f)){if(!PEER){PEER=m.f;startGame();ns('✔ Игра идёт. Вы — '+(me=='w'?'белые':'чёрные')+'.')}else if(NG)send({t:'start',g:NG,c:me=='w'?'b':'w',tm:$('#tm').value})}}
+else if(m.t=='start'){if(NR=='g'&&m.g!=NG){NG=m.g;PEER=m.f;me=m.c;$('#sd').value=me;$('#tm').value=m.tm;newGame();startGame(1);ns('✔ Игра идёт. Вы — '+(me=='w'?'белые':'чёрные')+'.')}}
+else if(m.t=='mv'){if(NG&&m.g==NG){NQ.push(m);drain()}}
+else if(m.t=='res'){if(NG&&m.g==NG&&started&&!over){over=1;$('#st').textContent='Соперник сдался. Вы победили!';fin()}}}
+function drain(){if(over||PM!='net')NQ=[];if(!NQ.length)return;if(!busy&&started){const i=NQ.findIndex(x=>x.n==MV.length&&S.t!=me);if(i>=0){const x=NQ.splice(i,1)[0],m=gen(S).find(y=>mvTxt(y)==x.u);if(m){if(x.tm)TM=x.tm;play(m)}}}NQ=NQ.filter(x=>x.n>=MV.length);if(NQ.length)setTimeout(drain,150)}
+setInterval(()=>{if(RC_&&!document.hidden&&(!NG||(started&&!over&&S.t!=me)))hist()},8000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&RC_)hist()});
+function dgInit(){const B=$('#bd');B.style.touchAction='none';B.addEventListener('pointerdown',e=>{const c=e.target.closest&&e.target.closest('.q');if(!c||!canMove())return;const i=+c.dataset.i,p=S.b[i],u=c.querySelector('u');if(!p||!u||col(p)!=S.t||(PM!='hot'&&col(p)!=me))return;
+const ms=gen(S).filter(m=>m.f==i);if(!ms.length)return;const x0=e.clientX,y0=e.clientY;let mv=0;
+const mm=ev=>{const dx=ev.clientX-x0,dy=ev.clientY-y0;if(!mv){if(Math.hypot(dx,dy)<8)return;mv=1;u.style.transition='none';u.style.pointerEvents='none';u.style.zIndex=9;[...B.children].forEach(q=>{const j=+q.dataset.i;q.classList.toggle('s',j==i);q.classList.toggle('t',ms.some(m=>m.p[0]==j))})}u.style.transform='translate('+dx+'px,'+dy+'px) scale(1.12)'},
+up=ev=>{removeEventListener('pointermove',mm);removeEventListener('pointerup',up);removeEventListener('pointercancel',up);if(!mv)return;const el=document.elementFromPoint(ev.clientX,ev.clientY),t=el&&el.closest&&el.closest('.q'),to=t?+t.dataset.i:-1,hit=ms.filter(m=>m.p[m.p.length-1]==to);
+if(hit.length==1){selF=-1;selP=[];NA=1;go(hit[0])}else if(hit.length>1||ms.some(m=>m.p[0]==to)){selF=i;selP=[];draw();click(to)}else{u.style.transition='transform .2s';u.style.transform='';setTimeout(draw,220)}};
+addEventListener('pointermove',mm);addEventListener('pointerup',up);addEventListener('pointercancel',up)})}
+function show(t){tab=t;['g','b'].forEach(x=>{$('#p'+x).hidden=x!=t;$('#t'+x).classList.toggle('on',x==t)});$('#bw').hidden=t!='g';if(t=='g')draw()}
+if(!self.IS_W){const rc=DB.dcur;try{claude.use('sample').then(x=>{SM=x;setAI()}).catch(()=>{})}catch(e){}setTh(DB.th);$('#sn').value=String(DB.sn);wInit();dgInit();newGame();show('g');setAI();restore(rc)}
+
+</script>
+<script>
+if('serviceWorker' in navigator){const had=!!navigator.serviceWorker.controller;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(had&&!window.__rl){window.__rl=1;location.reload()}});window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').then(r=>r.update()).catch(()=>{}))}
+</script></body></html>
